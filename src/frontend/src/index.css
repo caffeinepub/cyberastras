@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
+  font-weight: 200 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+    /* CyberAstras Dark Theme */
+    --background: 0.1 0.015 200;
+    --foreground: 0.96 0.005 210;
+    --card: 0.14 0.025 210;
+    --card-foreground: 0.96 0.005 210;
+    --popover: 0.16 0.03 210;
+    --popover-foreground: 0.96 0.005 210;
+    --primary: 0.83 0.15 192;
+    --primary-foreground: 0.1 0.015 200;
+    --secondary: 0.16 0.03 210;
+    --secondary-foreground: 0.96 0.005 210;
+    --muted: 0.18 0.025 210;
+    --muted-foreground: 0.65 0.02 210;
+    --accent: 0.76 0.1 75;
+    --accent-foreground: 0.1 0.015 200;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.25 0.035 210;
+    --input: 0.2 0.03 210;
+    --ring: 0.83 0.15 192;
+    --chart-1: 0.83 0.15 192;
+    --chart-2: 0.76 0.1 75;
+    --chart-3: 0.74 0.12 194;
+    --chart-4: 0.65 0.02 210;
+    --chart-5: 0.488 0.243 264.376;
+    --sidebar: 0.12 0.02 210;
+    --sidebar-foreground: 0.96 0.005 210;
+    --sidebar-primary: 0.83 0.15 192;
+    --sidebar-primary-foreground: 0.1 0.015 200;
+    --sidebar-accent: 0.16 0.03 210;
+    --sidebar-accent-foreground: 0.96 0.005 210;
+    --sidebar-border: 0.25 0.035 210;
+    --sidebar-ring: 0.83 0.15 192;
+    /* Custom tokens */
+    --cyber-cyan: oklch(0.83 0.15 192);
+    --cyber-gold: oklch(0.76 0.1 75);
+    --cyber-surface: oklch(0.14 0.025 210);
+    --cyber-surface-2: oklch(0.16 0.03 210);
+    --cyber-border: oklch(0.25 0.035 210);
+    --cyber-text-muted: oklch(0.65 0.02 210);
+    --cyber-glow-cyan: 0 0 20px oklch(0.83 0.15 192 / 0.5), 0 0 40px
+      oklch(0.83 0.15 192 / 0.2);
+    --cyber-glow-gold: 0 0 20px oklch(0.76 0.1 75 / 0.5), 0 0 40px
+      oklch(0.76 0.1 75 / 0.2);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "General Sans", "Plus Jakarta Sans", system-ui, sans-serif;
+    background: linear-gradient(
+      160deg,
+      oklch(0.1 0.015 200) 0%,
+      oklch(0.12 0.02 210) 100%
+    );
+    min-height: 100vh;
+  }
+}
+
+/* Glow utilities */
+.glow-cyan {
+  box-shadow: var(--cyber-glow-cyan);
+}
+.glow-gold {
+  box-shadow: var(--cyber-glow-gold);
+}
+.text-glow-cyan {
+  text-shadow: 0 0 20px oklch(0.83 0.15 192 / 0.7), 0 0 40px
+    oklch(0.83 0.15 192 / 0.3);
+}
+.text-glow-gold {
+  text-shadow: 0 0 20px oklch(0.76 0.1 75 / 0.7);
+}
+
+/* Circuit pattern background */
+.circuit-bg {
+  background-image: radial-gradient(
+      circle at 20% 50%,
+      oklch(0.83 0.15 192 / 0.04) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      oklch(0.76 0.1 75 / 0.03) 0%,
+      transparent 40%
+    ),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2300D1E8' stroke-width='0.3' stroke-opacity='0.08'%3E%3Cpath d='M10 30h10M30 10v10M40 30h10M30 40v10'/%3E%3Ccircle cx='10' cy='30' r='2'/%3E%3Ccircle cx='30' cy='10' r='2'/%3E%3Ccircle cx='50' cy='30' r='2'/%3E%3Ccircle cx='30' cy='50' r='2'/%3E%3Crect x='25' y='25' width='10' height='10' rx='1'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: oklch(0.1 0.015 200);
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(0.25 0.035 210);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.83 0.15 192 / 0.5);
+}
