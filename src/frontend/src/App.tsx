@@ -16,6 +16,7 @@ import {
   MessageSquare,
   Server,
   Shield,
+  ShieldCheck,
   Target,
   Twitter,
   User,
@@ -103,21 +104,6 @@ const AstraIcon = ({ size = 32 }: { size?: number }) => (
       opacity="0.9"
     />
   </svg>
-);
-
-// --- Stat item ---
-const StatItem = ({ value, label }: { value: string; label: string }) => (
-  <div className="text-center">
-    <div
-      className="font-display text-3xl font-bold text-glow-cyan"
-      style={{ color: "var(--cyber-cyan)" }}
-    >
-      {value}
-    </div>
-    <div className="text-sm mt-1" style={{ color: "var(--cyber-text-muted)" }}>
-      {label}
-    </div>
-  </div>
 );
 
 // --- Service card ---
@@ -284,6 +270,12 @@ export default function App() {
       description:
         "In-depth security testing of web applications including OWASP Top 10, authentication flaws, injection attacks, and business logic vulnerabilities.",
     },
+    {
+      icon: ShieldCheck,
+      title: "Cyber Security Awareness Training",
+      description:
+        "Empowering your team with hands-on training to recognize phishing, social engineering, and insider threats — building a human firewall across your organization.",
+    },
   ];
 
   return (
@@ -302,26 +294,25 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex items-center gap-3">
-              <AstraIcon size={32} />
-              <span
-                className="font-display text-lg font-bold uppercase tracking-widest text-glow-cyan"
-                style={{ color: "var(--cyber-cyan)" }}
-              >
-                CyberAstras
-              </span>
+            <div className="flex items-center">
+              <img
+                src="/assets/uploads/Untitled-3-1-1.png"
+                alt="CyberAstras"
+                className="h-10 w-auto"
+              />
             </div>
 
             {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-8">
               <NavLink href="#home">Home</NavLink>
               <NavLink href="#services">Services</NavLink>
+              <NavLink href="#blog">Blog</NavLink>
               <NavLink href="#about">About</NavLink>
               <NavLink href="#contact">Contact</NavLink>
             </nav>
 
             {/* CTA + Mobile */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center">
               <Button
                 data-ocid="nav.primary_button"
                 onClick={() => scrollTo("contact")}
@@ -363,7 +354,7 @@ export default function App() {
               }}
             >
               <div className="flex flex-col gap-1 px-6 py-4">
-                {["home", "services", "about", "contact"].map((id) => (
+                {["home", "services", "blog", "about", "contact"].map((id) => (
                   <button
                     key={id}
                     type="button"
@@ -512,26 +503,6 @@ export default function App() {
                   Request Consultation
                 </Button>
               </motion.div>
-
-              {/* Stats row */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="mt-12 flex gap-8"
-              >
-                <StatItem value="200+" label="Clients Protected" />
-                <div
-                  className="w-px"
-                  style={{ background: "oklch(0.25 0.035 210)" }}
-                />
-                <StatItem value="6+" label="Years Experience" />
-                <div
-                  className="w-px"
-                  style={{ background: "oklch(0.25 0.035 210)" }}
-                />
-                <StatItem value="<24h" label="Response Time" />
-              </motion.div>
             </div>
 
             {/* Right: Illustration */}
@@ -618,12 +589,14 @@ export default function App() {
               className="mt-4 max-w-2xl mx-auto text-base"
               style={{ color: "oklch(0.65 0.02 210)" }}
             >
-              Every service is designed with an attacker's mindset — identifying
-              weaknesses before adversaries exploit them.
+              Tailored security engagements for startups, SMBs, and enterprises.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6" data-ocid="services.list">
+          <div
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+            data-ocid="services.list"
+          >
             {services.map((s, i) => (
               <ServiceCard key={s.title} {...s} index={i} />
             ))}
@@ -667,25 +640,27 @@ export default function App() {
                 className="text-base leading-relaxed mb-5"
                 style={{ color: "oklch(0.65 0.02 210)" }}
               >
-                Just as ancient Astras were weapons forged with extraordinary
-                precision and power, CyberAstras brings that same philosophy to
-                digital security. Operating with an attacker's mindset —
-                thinking like adversaries to defend your most critical assets.
-              </p>
-              <p
-                className="text-base leading-relaxed mb-8"
-                style={{ color: "oklch(0.65 0.02 210)" }}
-              >
-                We believe cybersecurity should be strong, precise, and
-                accessible. Every engagement is a mission — from reconnaissance
-                to remediation, we leave no vulnerability unexplored.
+                Deepak Sharma is the founder and sole consultant at CyberAstras.
+                With a deep passion for offensive security, he brings hands-on
+                expertise in penetration testing, vulnerability research, and
+                web application security — working directly with every client
+                from kickoff to final report.
               </p>
 
               {/* Feature list */}
               {[
-                { icon: Zap, text: "Attacker-mindset penetration testing" },
-                { icon: Server, text: "Full-stack infrastructure assessment" },
-                { icon: Globe, text: "Web application security testing" },
+                {
+                  icon: Zap,
+                  text: "Certified ethical hacker with hands-on experience",
+                },
+                {
+                  icon: Server,
+                  text: "Solo consultant — you work directly with the expert",
+                },
+                {
+                  icon: Globe,
+                  text: "Transparent, thorough reporting every engagement",
+                },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-3 mb-3">
                   <div
@@ -807,6 +782,244 @@ export default function App() {
                 </svg>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== ASTRAS ===== */}
+      <section
+        id="astras"
+        className="relative py-24"
+        style={{ background: "oklch(0.09 0.018 205)" }}
+      >
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "linear-gradient(oklch(0.83 0.15 192) 1px, transparent 1px), linear-gradient(90deg, oklch(0.83 0.15 192) 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+          }}
+        />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-6"
+          >
+            <div
+              className="inline-block text-xs font-bold uppercase tracking-[0.3em] font-mono px-3 py-1 rounded"
+              style={{
+                color: "var(--cyber-cyan)",
+                background: "oklch(0.83 0.15 192 / 0.08)",
+                border: "1px solid oklch(0.83 0.15 192 / 0.2)",
+              }}
+            >
+              Digital Arsenal
+            </div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="flex flex-col items-center text-center mb-16"
+          >
+            <div
+              className="text-xs font-bold uppercase tracking-[0.4em] font-mono mb-5 px-4 py-1.5 rounded-full"
+              style={{
+                color: "var(--cyber-cyan)",
+                background: "oklch(0.83 0.15 192 / 0.12)",
+                border: "1px solid oklch(0.83 0.15 192 / 0.4)",
+                boxShadow: "0 0 14px oklch(0.83 0.15 192 / 0.2)",
+              }}
+            >
+              ✦ Main Astra ✦
+            </div>
+            <img
+              src="/assets/generated/astra-trishul.dim_800x600.png"
+              alt="Trishul — Main Astra"
+              style={{
+                maxWidth: "480px",
+                width: "100%",
+                filter:
+                  "drop-shadow(0 0 32px oklch(0.83 0.15 192 / 0.7)) drop-shadow(0 0 8px oklch(0.83 0.15 192 / 0.5))",
+              }}
+              className="mb-8"
+            />
+            <h2
+              className="font-display text-4xl sm:text-5xl font-black uppercase tracking-tight mb-2"
+              style={{
+                color: "var(--cyber-cyan)",
+                textShadow: "0 0 24px oklch(0.83 0.15 192 / 0.6)",
+              }}
+            >
+              Trishul
+            </h2>
+            <p
+              className="text-lg font-mono uppercase tracking-widest mb-5"
+              style={{ color: "oklch(0.65 0.05 192)" }}
+            >
+              The Weapon of Precision
+            </p>
+            <p
+              className="max-w-2xl text-base leading-relaxed"
+              style={{ color: "oklch(0.62 0.02 210)" }}
+            >
+              In ancient mythology, the Trishul was wielded to strike with
+              surgical precision across three realms. At CyberAstras, it
+              represents our core methodology — identifying, piercing, and
+              neutralizing threats at every layer of your attack surface.
+            </p>
+            <div
+              className="mt-10 w-64 h-px"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, oklch(0.83 0.15 192 / 0.6), transparent)",
+              }}
+            />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ===== BLOG ===== */}
+      <section id="blog" className="relative py-24 overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse at 80% 20%, oklch(0.83 0.15 192 / 0.04) 0%, transparent 60%)",
+          }}
+        />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <div
+              className="inline-block text-xs font-bold uppercase tracking-[0.3em] font-mono mb-4 px-3 py-1 rounded"
+              style={{
+                color: "var(--cyber-cyan)",
+                background: "oklch(0.83 0.15 192 / 0.08)",
+                border: "1px solid oklch(0.83 0.15 192 / 0.2)",
+              }}
+            >
+              Insights
+            </div>
+            <h2 className="font-display text-3xl sm:text-4xl font-black uppercase tracking-tight text-foreground">
+              Cybersecurity{" "}
+              <span
+                style={{
+                  color: "var(--cyber-cyan)",
+                  textShadow: "0 0 20px oklch(0.83 0.15 192 / 0.5)",
+                }}
+              >
+                Knowledge
+              </span>
+            </h2>
+            <p
+              className="mt-4 max-w-xl mx-auto text-base"
+              style={{ color: "oklch(0.65 0.02 210)" }}
+            >
+              Practical security insights from the field.
+            </p>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-8" data-ocid="blog.list">
+            {[
+              {
+                title: "Top Web Application Threats to Watch in 2026",
+                category: "Web Security",
+                date: "Mar 10, 2026",
+                excerpt:
+                  "As AI-driven attacks evolve, understanding the latest OWASP findings and emerging zero-day patterns is critical for businesses in 2026.",
+              },
+              {
+                title:
+                  "Phishing in the Age of Deepfakes: Staying Ahead in 2026",
+                category: "Awareness Training",
+                date: "Feb 18, 2026",
+                excerpt:
+                  "Deepfake audio and video have made social engineering more convincing than ever. Here's how to train your team to spot the new wave of phishing attacks.",
+              },
+              {
+                title:
+                  "Red Teaming vs Penetration Testing: What's Right for You in 2026",
+                category: "Penetration Testing",
+                date: "Jan 22, 2026",
+                excerpt:
+                  "Security needs have evolved. We break down the key differences between red team engagements and traditional pen tests to help you make the right call.",
+              },
+            ].map((post, i) => (
+              <motion.article
+                key={post.title}
+                data-ocid={`blog.item.${i + 1}`}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.12 }}
+                className="rounded-xl overflow-hidden flex flex-col"
+                style={{
+                  background: "oklch(0.12 0.018 205)",
+                  border: "1px solid oklch(0.83 0.15 192 / 0.12)",
+                  borderTop: "3px solid oklch(0.83 0.15 192 / 0.5)",
+                  transition:
+                    "border-top-color 0.2s, transform 0.2s, box-shadow 0.2s",
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderTopColor = "oklch(0.83 0.15 192)";
+                  el.style.transform = "translateY(-4px)";
+                  el.style.boxShadow = "0 8px 32px oklch(0.83 0.15 192 / 0.15)";
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderTopColor = "oklch(0.83 0.15 192 / 0.5)";
+                  el.style.transform = "translateY(0)";
+                  el.style.boxShadow = "none";
+                }}
+              >
+                <div className="p-6 flex flex-col flex-1">
+                  <div className="flex items-center justify-between mb-4">
+                    <span
+                      className="text-xs font-bold uppercase tracking-widest font-mono px-2 py-0.5 rounded"
+                      style={{
+                        color: "var(--cyber-cyan)",
+                        background: "oklch(0.83 0.15 192 / 0.1)",
+                        border: "1px solid oklch(0.83 0.15 192 / 0.2)",
+                      }}
+                    >
+                      {post.category}
+                    </span>
+                    <span
+                      className="text-xs font-mono"
+                      style={{ color: "oklch(0.50 0.02 210)" }}
+                    >
+                      {post.date}
+                    </span>
+                  </div>
+                  <h3 className="font-display font-bold text-base leading-snug mb-3 text-foreground">
+                    {post.title}
+                  </h3>
+                  <p
+                    className="text-sm leading-relaxed flex-1 mb-5"
+                    style={{ color: "oklch(0.60 0.02 210)" }}
+                  >
+                    {post.excerpt}
+                  </p>
+                  <a
+                    href="#blog"
+                    className="text-sm font-bold font-mono hover:opacity-75 transition-opacity duration-200"
+                    style={{ color: "var(--cyber-cyan)" }}
+                  >
+                    Read More →
+                  </a>
+                </div>
+              </motion.article>
+            ))}
           </div>
         </div>
       </section>
@@ -1242,30 +1455,32 @@ export default function App() {
                 Quick Links
               </h4>
               <ul className="space-y-3">
-                {["Home", "Services", "About", "Contact"].map((item) => (
-                  <li key={item}>
-                    <a
-                      href={`#${item.toLowerCase()}`}
-                      data-ocid="nav.link"
-                      className="text-sm flex items-center gap-2 transition-colors duration-200"
-                      style={{ color: "oklch(0.55 0.02 210)" }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.color =
-                          "oklch(0.83 0.15 192)";
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.color =
-                          "oklch(0.55 0.02 210)";
-                      }}
-                    >
-                      <ChevronRight
-                        size={12}
-                        style={{ color: "oklch(0.83 0.15 192 / 0.5)" }}
-                      />
-                      {item}
-                    </a>
-                  </li>
-                ))}
+                {["Home", "Services", "Blog", "About", "Contact"].map(
+                  (item) => (
+                    <li key={item}>
+                      <a
+                        href={`#${item.toLowerCase()}`}
+                        data-ocid="nav.link"
+                        className="text-sm flex items-center gap-2 transition-colors duration-200"
+                        style={{ color: "oklch(0.55 0.02 210)" }}
+                        onMouseEnter={(e) => {
+                          (e.currentTarget as HTMLElement).style.color =
+                            "oklch(0.83 0.15 192)";
+                        }}
+                        onMouseLeave={(e) => {
+                          (e.currentTarget as HTMLElement).style.color =
+                            "oklch(0.55 0.02 210)";
+                        }}
+                      >
+                        <ChevronRight
+                          size={12}
+                          style={{ color: "oklch(0.83 0.15 192 / 0.5)" }}
+                        />
+                        {item}
+                      </a>
+                    </li>
+                  ),
+                )}
               </ul>
             </div>
 
