@@ -10,6 +10,14 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
+export interface BlogPost {
+  'id' : bigint,
+  'title' : string,
+  'publishedAt' : Time,
+  'author' : string,
+  'excerpt' : string,
+  'category' : string,
+}
 export interface Inquiry {
   'name' : string,
   'email' : string,
@@ -18,7 +26,11 @@ export interface Inquiry {
 }
 export type Time = bigint;
 export interface _SERVICE {
+  'addBlogPost' : ActorMethod<[string, string, string, string], bigint>,
+  'deleteBlogPost' : ActorMethod<[bigint], undefined>,
   'getAllInquiries' : ActorMethod<[], Array<Inquiry>>,
+  'getBlogPostCount' : ActorMethod<[], bigint>,
+  'getLatestBlogPosts' : ActorMethod<[bigint], Array<BlogPost>>,
   'submitInquiry' : ActorMethod<[string, string, string], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;

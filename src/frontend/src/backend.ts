@@ -89,6 +89,14 @@ export class ExternalBlob {
         return this;
     }
 }
+export interface BlogPost {
+    id: bigint;
+    title: string;
+    publishedAt: Time;
+    author: string;
+    excerpt: string;
+    category: string;
+}
 export interface Inquiry {
     name: string;
     email: string;
@@ -97,11 +105,43 @@ export interface Inquiry {
 }
 export type Time = bigint;
 export interface backendInterface {
+    addBlogPost(title: string, category: string, excerpt: string, author: string): Promise<bigint>;
+    deleteBlogPost(id: bigint): Promise<void>;
     getAllInquiries(): Promise<Array<Inquiry>>;
+    getBlogPostCount(): Promise<bigint>;
+    getLatestBlogPosts(limit: bigint): Promise<Array<BlogPost>>;
     submitInquiry(name: string, email: string, message: string): Promise<void>;
 }
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
+    async addBlogPost(arg0: string, arg1: string, arg2: string, arg3: string): Promise<bigint> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.addBlogPost(arg0, arg1, arg2, arg3);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.addBlogPost(arg0, arg1, arg2, arg3);
+            return result;
+        }
+    }
+    async deleteBlogPost(arg0: bigint): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.deleteBlogPost(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.deleteBlogPost(arg0);
+            return result;
+        }
+    }
     async getAllInquiries(): Promise<Array<Inquiry>> {
         if (this.processError) {
             try {
@@ -113,6 +153,34 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.getAllInquiries();
+            return result;
+        }
+    }
+    async getBlogPostCount(): Promise<bigint> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getBlogPostCount();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getBlogPostCount();
+            return result;
+        }
+    }
+    async getLatestBlogPosts(arg0: bigint): Promise<Array<BlogPost>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getLatestBlogPosts(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getLatestBlogPosts(arg0);
             return result;
         }
     }

@@ -15,9 +15,25 @@ export const Inquiry = IDL.Record({
   'message' : IDL.Text,
   'timestamp' : Time,
 });
+export const BlogPost = IDL.Record({
+  'id' : IDL.Nat,
+  'title' : IDL.Text,
+  'publishedAt' : Time,
+  'author' : IDL.Text,
+  'excerpt' : IDL.Text,
+  'category' : IDL.Text,
+});
 
 export const idlService = IDL.Service({
+  'addBlogPost' : IDL.Func(
+      [IDL.Text, IDL.Text, IDL.Text, IDL.Text],
+      [IDL.Nat],
+      [],
+    ),
+  'deleteBlogPost' : IDL.Func([IDL.Nat], [], []),
   'getAllInquiries' : IDL.Func([], [IDL.Vec(Inquiry)], ['query']),
+  'getBlogPostCount' : IDL.Func([], [IDL.Nat], ['query']),
+  'getLatestBlogPosts' : IDL.Func([IDL.Nat], [IDL.Vec(BlogPost)], ['query']),
   'submitInquiry' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [], []),
 });
 
@@ -31,9 +47,25 @@ export const idlFactory = ({ IDL }) => {
     'message' : IDL.Text,
     'timestamp' : Time,
   });
+  const BlogPost = IDL.Record({
+    'id' : IDL.Nat,
+    'title' : IDL.Text,
+    'publishedAt' : Time,
+    'author' : IDL.Text,
+    'excerpt' : IDL.Text,
+    'category' : IDL.Text,
+  });
   
   return IDL.Service({
+    'addBlogPost' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Text, IDL.Text],
+        [IDL.Nat],
+        [],
+      ),
+    'deleteBlogPost' : IDL.Func([IDL.Nat], [], []),
     'getAllInquiries' : IDL.Func([], [IDL.Vec(Inquiry)], ['query']),
+    'getBlogPostCount' : IDL.Func([], [IDL.Nat], ['query']),
+    'getLatestBlogPosts' : IDL.Func([IDL.Nat], [IDL.Vec(BlogPost)], ['query']),
     'submitInquiry' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [], []),
   });
 };

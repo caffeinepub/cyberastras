@@ -24,7 +24,7 @@ import {
   Zap,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 // --- Circuit board SVG background ---
@@ -203,6 +203,35 @@ const NavLink = ({
   </a>
 );
 
+const staticBlogPosts = [
+  {
+    title: "Top Online Security Risks Every Business Should Know in 2026",
+    category: "Web Security",
+    excerpt:
+      "Hackers are getting smarter with AI. Here is what every business needs to watch out for in 2026 to keep their websites safe.",
+    author: "Deepak Sharma",
+    date: "Jan 15, 2026",
+  },
+  {
+    title:
+      "How Fake Videos and Voice Clips Are Being Used to Trick People in 2026",
+    category: "Awareness Training",
+    excerpt:
+      "Fake videos and voice clips are now being used to trick people. Learn how to teach your team to spot these new types of scams.",
+    author: "Deepak Sharma",
+    date: "Feb 3, 2026",
+  },
+  {
+    title:
+      "Security Testing Options Explained: Which One Does Your Business Need in 2026",
+    category: "Penetration Testing",
+    excerpt:
+      "Not sure which security service you need? We explain the difference in simple terms so you can make the right choice for your business.",
+    author: "Deepak Sharma",
+    date: "Mar 10, 2026",
+  },
+];
+
 export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -256,25 +285,25 @@ export default function App() {
       icon: Target,
       title: "Penetration Testing",
       description:
-        "Simulated attacks using an attacker's mindset to expose critical vulnerabilities in your web applications, networks, and infrastructure before adversaries do.",
+        "We test your systems the same way a real hacker would — finding weak spots in your website, network, and apps before someone with bad intentions does.",
     },
     {
       icon: Lock,
       title: "Vulnerability Assessment",
       description:
-        "Comprehensive scanning and manual analysis to identify, classify, and prioritize security weaknesses across your entire digital attack surface.",
+        "We scan and manually review your systems to find security gaps, rank them by risk, and tell you exactly what needs to be fixed first.",
     },
     {
       icon: Globe,
       title: "Web Application Security",
       description:
-        "In-depth security testing of web applications including OWASP Top 10, authentication flaws, injection attacks, and business logic vulnerabilities.",
+        "We deeply test your website and web apps for known security issues — like weak logins, data leaks, and ways attackers could manipulate your system.",
     },
     {
       icon: ShieldCheck,
       title: "Cyber Security Awareness Training",
       description:
-        "Empowering your team with hands-on training to recognize phishing, social engineering, and insider threats — building a human firewall across your organization.",
+        "We train your staff to spot fake emails, scam calls, and suspicious behavior — because your people are your first line of defense.",
     },
   ];
 
@@ -464,10 +493,10 @@ export default function App() {
                 className="text-base sm:text-lg leading-relaxed mb-8 max-w-xl"
                 style={{ color: "oklch(0.65 0.02 210)" }}
               >
-                CyberAstras combines the precision and power of ancient Astras
-                with modern cybersecurity. We identify and eliminate real-world
-                threats using an attacker's mindset — protecting your
-                applications, networks, and systems with surgical precision.
+                CyberAstras brings the strength and precision of ancient Astras
+                to online security. We find the weaknesses in your systems
+                before hackers do — and help you fix them before any damage is
+                done.
               </motion.p>
 
               <motion.div
@@ -641,10 +670,9 @@ export default function App() {
                 style={{ color: "oklch(0.65 0.02 210)" }}
               >
                 Deepak Sharma is the founder and sole consultant at CyberAstras.
-                With a deep passion for offensive security, he brings hands-on
-                expertise in penetration testing, vulnerability research, and
-                web application security — working directly with every client
-                from kickoff to final report.
+                With a deep passion for finding and fixing security flaws, he
+                works hands-on with every client — from the first meeting to the
+                final report — making sure your systems are safe.
               </p>
 
               {/* Feature list */}
@@ -867,10 +895,10 @@ export default function App() {
               className="max-w-2xl text-base leading-relaxed"
               style={{ color: "oklch(0.62 0.02 210)" }}
             >
-              In ancient mythology, the Trishul was wielded to strike with
-              surgical precision across three realms. At CyberAstras, it
-              represents our core methodology — identifying, piercing, and
-              neutralizing threats at every layer of your attack surface.
+              In ancient mythology, the Trishul was used to strike with perfect
+              accuracy across all three worlds. At CyberAstras, it represents
+              our approach — spotting, targeting, and stopping threats at every
+              level of your digital presence.
             </p>
             <div
               className="mt-10 w-64 h-px"
@@ -929,31 +957,7 @@ export default function App() {
             </p>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-8" data-ocid="blog.list">
-            {[
-              {
-                title: "Top Web Application Threats to Watch in 2026",
-                category: "Web Security",
-                date: "Mar 10, 2026",
-                excerpt:
-                  "As AI-driven attacks evolve, understanding the latest OWASP findings and emerging zero-day patterns is critical for businesses in 2026.",
-              },
-              {
-                title:
-                  "Phishing in the Age of Deepfakes: Staying Ahead in 2026",
-                category: "Awareness Training",
-                date: "Feb 18, 2026",
-                excerpt:
-                  "Deepfake audio and video have made social engineering more convincing than ever. Here's how to train your team to spot the new wave of phishing attacks.",
-              },
-              {
-                title:
-                  "Red Teaming vs Penetration Testing: What's Right for You in 2026",
-                category: "Penetration Testing",
-                date: "Jan 22, 2026",
-                excerpt:
-                  "Security needs have evolved. We break down the key differences between red team engagements and traditional pen tests to help you make the right call.",
-              },
-            ].map((post, i) => (
+            {staticBlogPosts.map((post, i) => (
               <motion.article
                 key={post.title}
                 data-ocid={`blog.item.${i + 1}`}
@@ -1077,8 +1081,8 @@ export default function App() {
                 className="text-base leading-relaxed max-w-sm"
                 style={{ color: "oklch(0.65 0.02 210)" }}
               >
-                Ready to secure your digital perimeter? Reach out and we will
-                respond within 24 hours with a tailored security assessment.
+                Ready to protect your business online? Get in touch and we will
+                reply within 24 hours with a plan built around your needs.
               </p>
 
               {/* Contact info */}
