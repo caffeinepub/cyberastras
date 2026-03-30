@@ -61,7 +61,11 @@ export default function HomePage() {
       <section
         id="home"
         className="relative min-h-screen flex items-center circuit-bg"
-        style={{ background: "oklch(0.10 0.015 200)", overflow: "clip" }}
+        style={{
+          background: "oklch(0.10 0.015 200)",
+          overflowX: "clip",
+          overflowY: "visible",
+        }}
       >
         <CircuitPattern />
 
@@ -177,7 +181,7 @@ export default function HomePage() {
               </motion.div>
             </div>
 
-            {/* Right: Astra Image — visible on all screen sizes */}
+            {/* Right: Astra Image — visible on all screen sizes, no clipping */}
             <motion.div
               initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -191,9 +195,9 @@ export default function HomePage() {
                     "radial-gradient(circle at 50% 50%, oklch(0.83 0.15 192 / 0.06) 0%, transparent 70%)",
                 }}
               />
-              {/* No overflow-hidden so nothing gets clipped */}
+              {/* No overflow-hidden and no max-w constraints so image is never clipped */}
               <div
-                className="relative z-10 w-full max-w-sm sm:max-w-md lg:max-w-lg rounded-xl"
+                className="relative z-10 w-full rounded-xl"
                 style={{
                   border: "1px solid oklch(0.25 0.035 210 / 0.6)",
                   boxShadow:
@@ -209,7 +213,6 @@ export default function HomePage() {
                     display: "block",
                     width: "100%",
                     height: "auto",
-                    objectFit: "contain",
                     filter: "drop-shadow(0 8px 24px oklch(0 0 0 / 0.4))",
                   }}
                 />
@@ -524,7 +527,7 @@ export default function HomePage() {
               </div>
             </motion.div>
 
-            {/* Right: Founder photo — no overflow hidden to avoid any clipping */}
+            {/* Right: Founder photo — no overflow-hidden on parent to prevent clipping */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -681,6 +684,7 @@ export default function HomePage() {
                     </span>
                     <button
                       type="button"
+                      data-ocid="home.blog.read_more.button"
                       onClick={() => setSelected(post)}
                       className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest font-mono transition-all duration-200 hover:gap-2.5"
                       style={{ color: "var(--cyber-cyan)" }}
@@ -778,10 +782,12 @@ export default function HomePage() {
       {/* Full Article Dialog */}
       <Dialog
         open={!!selected}
-        onOpenChange={(open) => !open && setSelected(null)}
+        onOpenChange={(open) => {
+          if (!open) setSelected(null);
+        }}
       >
         <DialogContent
-          className="max-w-2xl max-h-[80vh] overflow-y-auto"
+          className="z-[200] max-w-2xl max-h-[85vh] overflow-y-auto"
           style={{
             background: "oklch(0.12 0.018 205)",
             border: "1px solid oklch(0.83 0.15 192 / 0.2)",
@@ -818,13 +824,14 @@ export default function HomePage() {
               </DialogHeader>
 
               <div className="mt-4 space-y-4">
-                {selected.content.split("\n\n").map((para) => (
+                {selected.content.split("\n\n").map((para, idx) => (
                   <p
-                    key={para.slice(0, 40)}
+                    // biome-ignore lint/suspicious/noArrayIndexKey: paragraph order is stable
+                    key={idx}
                     className="text-sm leading-relaxed"
                     style={{ color: "oklch(0.68 0.02 210)" }}
                   >
-                    {para}
+                    {para.trim()}
                   </p>
                 ))}
               </div>

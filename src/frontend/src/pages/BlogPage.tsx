@@ -107,6 +107,7 @@ export default function BlogPage() {
                     </span>
                     <button
                       type="button"
+                      data-ocid="blog.read_more.button"
                       onClick={() => setSelected(post)}
                       className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest font-mono transition-all duration-200 hover:gap-2.5"
                       style={{ color: "var(--cyber-cyan)" }}
@@ -124,10 +125,12 @@ export default function BlogPage() {
       {/* Full Article Dialog */}
       <Dialog
         open={!!selected}
-        onOpenChange={(open) => !open && setSelected(null)}
+        onOpenChange={(open) => {
+          if (!open) setSelected(null);
+        }}
       >
         <DialogContent
-          className="max-w-2xl max-h-[80vh] overflow-y-auto"
+          className="z-[200] max-w-2xl max-h-[85vh] overflow-y-auto"
           style={{
             background: "oklch(0.12 0.018 205)",
             border: "1px solid oklch(0.83 0.15 192 / 0.2)",
@@ -164,13 +167,14 @@ export default function BlogPage() {
               </DialogHeader>
 
               <div className="mt-4 space-y-4">
-                {selected.content.split("\n\n").map((para) => (
+                {selected.content.split("\n\n").map((para, idx) => (
                   <p
-                    key={para.slice(0, 40)}
+                    // biome-ignore lint/suspicious/noArrayIndexKey: paragraph order is stable
+                    key={idx}
                     className="text-sm leading-relaxed"
                     style={{ color: "oklch(0.68 0.02 210)" }}
                   >
-                    {para}
+                    {para.trim()}
                   </p>
                 ))}
               </div>

@@ -93,6 +93,14 @@
   }
 }
 
+/* Ensure dialog overlay and content always appear above the fixed navbar (z-50) */
+[data-slot="dialog-overlay"] {
+  z-index: 200 !important;
+}
+[data-slot="dialog-content"] {
+  z-index: 200 !important;
+}
+
 /* Glow utilities */
 .glow-cyan {
   box-shadow: var(--cyber-glow-cyan);
