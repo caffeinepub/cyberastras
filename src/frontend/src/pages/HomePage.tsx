@@ -181,12 +181,12 @@ export default function HomePage() {
               </motion.div>
             </div>
 
-            {/* Right: Astra Image — visible on all screen sizes, no clipping */}
+            {/* Right: Astra Image — no border box, no overflow-hidden, full image visible */}
             <motion.div
               initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex justify-center items-center relative mt-10 lg:mt-0"
+              className="flex justify-center items-start relative mt-10 lg:mt-0"
             >
               <div
                 className="absolute inset-0 rounded-full pointer-events-none"
@@ -195,28 +195,18 @@ export default function HomePage() {
                     "radial-gradient(circle at 50% 50%, oklch(0.83 0.15 192 / 0.06) 0%, transparent 70%)",
                 }}
               />
-              {/* No overflow-hidden and no max-w constraints so image is never clipped */}
-              <div
-                className="relative z-10 w-full rounded-xl"
+              <motion.img
+                src="/assets/image-019d40a8-4b5f-71e9-9a3a-67bb587fc2ce.png"
+                alt="CyberAstras — Ancient strength, digital protection"
+                className="relative z-10 block"
                 style={{
-                  border: "1px solid oklch(0.25 0.035 210 / 0.6)",
-                  boxShadow:
-                    "0 0 0 1px oklch(0.83 0.15 192 / 0.08), 0 20px 60px oklch(0 0 0 / 0.5)",
-                  background: "oklch(0.10 0.015 200)",
+                  display: "block",
+                  width: "100%",
+                  height: "auto",
+                  maxWidth: "100%",
+                  filter: "drop-shadow(0 8px 24px oklch(0 0 0 / 0.4))",
                 }}
-              >
-                <motion.img
-                  src="/assets/uploads/image-1.png"
-                  alt="CyberAstras — Ancient strength, digital protection"
-                  className="w-full block rounded-xl"
-                  style={{
-                    display: "block",
-                    width: "100%",
-                    height: "auto",
-                    filter: "drop-shadow(0 8px 24px oklch(0 0 0 / 0.4))",
-                  }}
-                />
-              </div>
+              />
             </motion.div>
           </div>
         </div>
