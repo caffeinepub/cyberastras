@@ -7,6 +7,8 @@ import { encryptText } from "@/lib/crypto";
 import {
   ArrowRight,
   ChevronRight,
+  Crosshair,
+  Eye,
   Github,
   Globe,
   Linkedin,
@@ -20,6 +22,7 @@ import {
   Target,
   Twitter,
   User,
+  Wifi,
   X,
   Zap,
 } from "lucide-react";
@@ -294,16 +297,16 @@ export default function App() {
         "We scan and manually review your systems to find security gaps, rank them by risk, and tell you exactly what needs to be fixed first.",
     },
     {
+      icon: Wifi,
+      title: "WiFi Security",
+      description:
+        "We test your wireless network for weak points that could let outsiders get in — including weak passwords, open hotspots, and router misconfigurations.",
+    },
+    {
       icon: Globe,
       title: "Web Application Security",
       description:
         "We deeply test your website and web apps for known security issues — like weak logins, data leaks, and ways attackers could manipulate your system.",
-    },
-    {
-      icon: ShieldCheck,
-      title: "Cyber Security Awareness Training",
-      description:
-        "We train your staff to spot fake emails, scam calls, and suspicious behavior — because your people are your first line of defense.",
     },
   ];
 
@@ -549,9 +552,9 @@ export default function App() {
                 }}
               />
               <motion.img
-                src="/assets/generated/astra-hero-transparent.dim_600x500.png"
+                src="/assets/generated/astra-hero-v2-transparent.dim_600x550.png"
                 alt="CyberAstras — Ancient Astra warrior digital illustration"
-                className="relative z-10 w-full max-w-lg animate-float"
+                className="relative z-10 w-full max-w-lg object-contain animate-float"
                 style={{
                   filter:
                     "drop-shadow(0 0 40px oklch(0.83 0.15 192 / 0.35)) drop-shadow(0 0 80px oklch(0.76 0.10 75 / 0.15))",
@@ -569,6 +572,145 @@ export default function App() {
               "linear-gradient(to bottom, transparent, oklch(0.10 0.015 200))",
           }}
         />
+      </section>
+
+      {/* ===== VISION & MISSION ===== */}
+      <section
+        className="relative py-20"
+        style={{ background: "oklch(0.10 0.015 200)" }}
+      >
+        <div
+          className="absolute inset-0 opacity-[0.025]"
+          style={{
+            backgroundImage:
+              "linear-gradient(oklch(0.83 0.15 192) 1px, transparent 1px), linear-gradient(90deg, oklch(0.83 0.15 192) 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+          }}
+        />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <div
+              className="inline-block text-xs font-bold uppercase tracking-[0.3em] font-mono mb-4 px-3 py-1 rounded"
+              style={{
+                color: "var(--cyber-cyan)",
+                background: "oklch(0.83 0.15 192 / 0.08)",
+                border: "1px solid oklch(0.83 0.15 192 / 0.2)",
+              }}
+            >
+              Who We Are
+            </div>
+            <h2 className="font-display text-3xl sm:text-4xl font-black uppercase tracking-tight text-foreground">
+              Our <span style={{ color: "var(--cyber-cyan)" }}>Purpose</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Vision Card */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="rounded-xl p-8 relative overflow-hidden"
+              style={{
+                background: "oklch(0.13 0.022 205)",
+                border: "1px solid oklch(0.25 0.035 210 / 0.7)",
+                boxShadow: "0 0 40px oklch(0.83 0.15 192 / 0.06)",
+              }}
+            >
+              <div
+                className="absolute top-0 left-0 w-full h-1 rounded-t-xl"
+                style={{
+                  background:
+                    "linear-gradient(90deg, var(--cyber-cyan), transparent)",
+                }}
+              />
+              <div
+                className="w-12 h-12 rounded-lg flex items-center justify-center mb-5"
+                style={{
+                  background: "oklch(0.83 0.15 192 / 0.1)",
+                  border: "1px solid oklch(0.83 0.15 192 / 0.3)",
+                }}
+              >
+                <Eye size={22} style={{ color: "var(--cyber-cyan)" }} />
+              </div>
+              <div
+                className="text-xs font-bold uppercase tracking-[0.3em] font-mono mb-3"
+                style={{ color: "var(--cyber-cyan)" }}
+              >
+                Our Vision
+              </div>
+              <h3 className="font-display text-xl font-black uppercase tracking-tight text-foreground mb-4">
+                A Safer Digital World
+              </h3>
+              <p
+                className="text-base leading-relaxed"
+                style={{ color: "oklch(0.65 0.02 210)" }}
+              >
+                We envision a world where every business — big or small — can
+                operate online without fear of being hacked. Our goal is to make
+                strong cybersecurity accessible to everyone, not just large
+                corporations.
+              </p>
+            </motion.div>
+
+            {/* Mission Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="rounded-xl p-8 relative overflow-hidden"
+              style={{
+                background: "oklch(0.13 0.022 205)",
+                border: "1px solid oklch(0.25 0.035 210 / 0.7)",
+                boxShadow: "0 0 40px oklch(0.76 0.10 75 / 0.06)",
+              }}
+            >
+              <div
+                className="absolute top-0 left-0 w-full h-1 rounded-t-xl"
+                style={{
+                  background:
+                    "linear-gradient(90deg, oklch(0.76 0.10 75), transparent)",
+                }}
+              />
+              <div
+                className="w-12 h-12 rounded-lg flex items-center justify-center mb-5"
+                style={{
+                  background: "oklch(0.76 0.10 75 / 0.1)",
+                  border: "1px solid oklch(0.76 0.10 75 / 0.3)",
+                }}
+              >
+                <Crosshair size={22} style={{ color: "oklch(0.76 0.10 75)" }} />
+              </div>
+              <div
+                className="text-xs font-bold uppercase tracking-[0.3em] font-mono mb-3"
+                style={{ color: "oklch(0.76 0.10 75)" }}
+              >
+                Our Mission
+              </div>
+              <h3 className="font-display text-xl font-black uppercase tracking-tight text-foreground mb-4">
+                Protect Before They Strike
+              </h3>
+              <p
+                className="text-base leading-relaxed"
+                style={{ color: "oklch(0.65 0.02 210)" }}
+              >
+                Our mission is to find and fix security weaknesses in your
+                systems before attackers can exploit them. We bring the
+                precision and dedication of a true expert to every engagement —
+                giving you real answers, plain language reports, and peace of
+                mind.
+              </p>
+            </motion.div>
+          </div>
+        </div>
       </section>
 
       {/* ===== SERVICES ===== */}
@@ -679,7 +821,7 @@ export default function App() {
               {[
                 {
                   icon: Zap,
-                  text: "Certified ethical hacker with hands-on experience",
+                  text: "Years of industry-level experience protecting real businesses from cyber threats",
                 },
                 {
                   icon: Server,
@@ -719,40 +861,38 @@ export default function App() {
               className="relative"
             >
               <div
-                className="rounded-xl overflow-hidden relative"
+                className="rounded-xl relative"
                 style={{
                   border: "1px solid oklch(0.25 0.035 210)",
                   boxShadow:
                     "0 0 0 1px oklch(0.83 0.15 192 / 0.1), 0 20px 60px oklch(0 0 0 / 0.5)",
+                  background: "oklch(0.10 0.015 200)",
+                  overflow: "visible",
                 }}
               >
                 <img
                   src="/assets/uploads/image-1.png"
                   alt="Deepak Sharma — Founder & CyberSecurity Consultant at CyberAstras"
-                  className="w-full object-cover object-center"
-                  style={{ aspectRatio: "4/5" }}
+                  className="w-full object-contain block rounded-t-xl"
                 />
-                {/* Overlay */}
+                {/* Founder info footer */}
                 <div
-                  className="absolute inset-0 pointer-events-none"
+                  className="p-5 rounded-b-xl"
                   style={{
-                    background:
-                      "linear-gradient(to top, oklch(0.10 0.015 200 / 0.92) 0%, transparent 55%)",
+                    background: "oklch(0.10 0.015 200)",
+                    borderTop: "1px solid oklch(0.25 0.035 210)",
                   }}
-                />
-
-                {/* Founder info overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-6">
+                >
                   <div
                     className="text-xs font-bold uppercase tracking-widest font-mono mb-1"
                     style={{ color: "var(--cyber-cyan)" }}
                   >
                     Founder & CyberSecurity Consultant
                   </div>
-                  <div className="text-white font-black text-xl font-display uppercase tracking-wide">
+                  <div className="text-white font-black text-xl font-display uppercase tracking-wide mb-3">
                     Deepak Sharma
                   </div>
-                  <div className="flex items-center gap-3 mt-2">
+                  <div className="flex items-center gap-3 flex-wrap">
                     <span
                       className="inline-flex items-center gap-1.5 text-xs font-mono px-2 py-1 rounded"
                       style={{
@@ -811,103 +951,6 @@ export default function App() {
               </div>
             </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* ===== ASTRAS ===== */}
-      <section
-        id="astras"
-        className="relative py-24"
-        style={{ background: "oklch(0.09 0.018 205)" }}
-      >
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "linear-gradient(oklch(0.83 0.15 192) 1px, transparent 1px), linear-gradient(90deg, oklch(0.83 0.15 192) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-6"
-          >
-            <div
-              className="inline-block text-xs font-bold uppercase tracking-[0.3em] font-mono px-3 py-1 rounded"
-              style={{
-                color: "var(--cyber-cyan)",
-                background: "oklch(0.83 0.15 192 / 0.08)",
-                border: "1px solid oklch(0.83 0.15 192 / 0.2)",
-              }}
-            >
-              Digital Arsenal
-            </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="flex flex-col items-center text-center mb-16"
-          >
-            <div
-              className="text-xs font-bold uppercase tracking-[0.4em] font-mono mb-5 px-4 py-1.5 rounded-full"
-              style={{
-                color: "var(--cyber-cyan)",
-                background: "oklch(0.83 0.15 192 / 0.12)",
-                border: "1px solid oklch(0.83 0.15 192 / 0.4)",
-                boxShadow: "0 0 14px oklch(0.83 0.15 192 / 0.2)",
-              }}
-            >
-              ✦ Main Astra ✦
-            </div>
-            <img
-              src="/assets/generated/astra-trishul.dim_800x600.png"
-              alt="Trishul — Main Astra"
-              style={{
-                maxWidth: "480px",
-                width: "100%",
-                filter:
-                  "drop-shadow(0 0 32px oklch(0.83 0.15 192 / 0.7)) drop-shadow(0 0 8px oklch(0.83 0.15 192 / 0.5))",
-              }}
-              className="mb-8"
-            />
-            <h2
-              className="font-display text-4xl sm:text-5xl font-black uppercase tracking-tight mb-2"
-              style={{
-                color: "var(--cyber-cyan)",
-                textShadow: "0 0 24px oklch(0.83 0.15 192 / 0.6)",
-              }}
-            >
-              Trishul
-            </h2>
-            <p
-              className="text-lg font-mono uppercase tracking-widest mb-5"
-              style={{ color: "oklch(0.65 0.05 192)" }}
-            >
-              The Weapon of Precision
-            </p>
-            <p
-              className="max-w-2xl text-base leading-relaxed"
-              style={{ color: "oklch(0.62 0.02 210)" }}
-            >
-              In ancient mythology, the Trishul was used to strike with perfect
-              accuracy across all three worlds. At CyberAstras, it represents
-              our approach — spotting, targeting, and stopping threats at every
-              level of your digital presence.
-            </p>
-            <div
-              className="mt-10 w-64 h-px"
-              style={{
-                background:
-                  "linear-gradient(90deg, transparent, oklch(0.83 0.15 192 / 0.6), transparent)",
-              }}
-            />
-          </motion.div>
         </div>
       </section>
 
