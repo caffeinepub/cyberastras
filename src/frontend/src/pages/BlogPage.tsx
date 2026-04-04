@@ -1,20 +1,8 @@
 import { PageHero } from "@/components/shared";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { type BlogPost, getPublishedPosts } from "@/data/blogPosts";
-import { ArrowRight } from "lucide-react";
+import { staticBlogPosts } from "@/data/blogPosts";
 import { motion } from "motion/react";
-import { useState } from "react";
 
 export default function BlogPage() {
-  const posts = getPublishedPosts();
-  const [selected, setSelected] = useState<BlogPost | null>(null);
-
   return (
     <>
       <PageHero
@@ -37,13 +25,13 @@ export default function BlogPage() {
         />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
-            {posts.map((post, i) => (
+            {staticBlogPosts.map((post, i) => (
               <motion.article
                 key={post.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
+                transition={{ duration: 0.5, delay: i * 0.12 }}
                 className="rounded-xl overflow-hidden flex flex-col"
                 style={{
                   background: "oklch(0.12 0.018 205)",
@@ -105,15 +93,6 @@ export default function BlogPage() {
                     >
                       {post.author}
                     </span>
-                    <button
-                      type="button"
-                      data-ocid="blog.read_more.button"
-                      onClick={() => setSelected(post)}
-                      className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest font-mono transition-all duration-200 hover:gap-2.5"
-                      style={{ color: "var(--cyber-cyan)" }}
-                    >
-                      Read More <ArrowRight size={12} />
-                    </button>
                   </div>
                 </div>
               </motion.article>
@@ -121,90 +100,6 @@ export default function BlogPage() {
           </div>
         </div>
       </section>
-
-      {/* Full Article Dialog */}
-      <Dialog
-        open={!!selected}
-        onOpenChange={(open) => {
-          if (!open) setSelected(null);
-        }}
-      >
-        <DialogContent
-          className="z-[200] max-w-2xl max-h-[85vh] overflow-y-auto"
-          style={{
-            background: "oklch(0.12 0.018 205)",
-            border: "1px solid oklch(0.83 0.15 192 / 0.2)",
-            color: "var(--foreground)",
-          }}
-        >
-          {selected && (
-            <>
-              <DialogHeader>
-                <div className="flex items-center gap-3 mb-2">
-                  <span
-                    className="text-xs font-bold uppercase tracking-widest font-mono px-2 py-0.5 rounded"
-                    style={{
-                      color: "var(--cyber-cyan)",
-                      background: "oklch(0.83 0.15 192 / 0.1)",
-                      border: "1px solid oklch(0.83 0.15 192 / 0.2)",
-                    }}
-                  >
-                    {selected.category}
-                  </span>
-                  <span
-                    className="text-xs font-mono"
-                    style={{ color: "oklch(0.50 0.02 210)" }}
-                  >
-                    {selected.date}
-                  </span>
-                </div>
-                <DialogTitle
-                  className="font-display font-bold text-lg leading-snug text-foreground"
-                  style={{ textAlign: "left" }}
-                >
-                  {selected.title}
-                </DialogTitle>
-              </DialogHeader>
-
-              <div className="mt-4 space-y-4">
-                {selected.content.split("\n\n").map((para, idx) => (
-                  <p
-                    // biome-ignore lint/suspicious/noArrayIndexKey: paragraph order is stable
-                    key={idx}
-                    className="text-sm leading-relaxed"
-                    style={{ color: "oklch(0.68 0.02 210)" }}
-                  >
-                    {para.trim()}
-                  </p>
-                ))}
-              </div>
-
-              <div
-                className="mt-6 pt-4 flex items-center justify-between"
-                style={{ borderTop: "1px solid oklch(0.25 0.035 210 / 0.4)" }}
-              >
-                <span
-                  className="text-xs font-mono"
-                  style={{ color: "oklch(0.45 0.02 210)" }}
-                >
-                  {selected.author} &mdash; CyberAstras
-                </span>
-                <Button
-                  size="sm"
-                  onClick={() => setSelected(null)}
-                  className="font-display font-bold uppercase tracking-widest text-xs rounded-full px-5 h-8"
-                  style={{
-                    background: "oklch(0.83 0.15 192)",
-                    color: "oklch(0.10 0.015 200)",
-                  }}
-                >
-                  Close
-                </Button>
-              </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
     </>
   );
 }

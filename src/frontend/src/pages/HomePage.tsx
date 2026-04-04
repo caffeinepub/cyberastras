@@ -1,12 +1,6 @@
 import { AstraIcon, CircuitPattern, ServiceCard } from "@/components/shared";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { type BlogPost, getPublishedPosts } from "@/data/blogPosts";
+import { staticBlogPosts } from "@/data/blogPosts";
 import { Link } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -21,7 +15,6 @@ import {
   Zap,
 } from "lucide-react";
 import { motion } from "motion/react";
-import { useState } from "react";
 
 // Services data for teaser (short descriptions)
 const homeServices = [
@@ -52,20 +45,13 @@ const homeServices = [
 ];
 
 export default function HomePage() {
-  const latestPosts = getPublishedPosts().slice(0, 2);
-  const [selected, setSelected] = useState<BlogPost | null>(null);
-
   return (
     <>
       {/* ===== HERO ===== */}
       <section
         id="home"
         className="relative min-h-screen flex items-center circuit-bg"
-        style={{
-          background: "oklch(0.10 0.015 200)",
-          overflowX: "clip",
-          overflowY: "visible",
-        }}
+        style={{ background: "oklch(0.10 0.015 200)", overflow: "clip" }}
       >
         <CircuitPattern />
 
@@ -181,32 +167,35 @@ export default function HomePage() {
               </motion.div>
             </div>
 
-            {/* Right: Astra Image — no border box, no overflow-hidden, full image visible */}
+            {/* Right: Trishul Illustration */}
             <motion.div
               initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex justify-center items-start relative mt-10 lg:mt-0"
+              className="flex justify-center items-center relative"
             >
               <div
-                className="absolute inset-0 rounded-full pointer-events-none"
+                className="absolute inset-0 rounded-full animate-pulse-glow pointer-events-none"
                 style={{
                   background:
-                    "radial-gradient(circle at 50% 50%, oklch(0.83 0.15 192 / 0.06) 0%, transparent 70%)",
+                    "radial-gradient(circle at 50% 50%, oklch(0.83 0.15 192 / 0.08) 0%, transparent 70%)",
                 }}
               />
-              <motion.img
-                src="/assets/image-019d40a8-4b5f-71e9-9a3a-67bb587fc2ce.png"
-                alt="CyberAstras — Ancient strength, digital protection"
-                className="relative z-10 block"
-                style={{
-                  display: "block",
-                  width: "100%",
-                  height: "auto",
-                  maxWidth: "100%",
-                  filter: "drop-shadow(0 8px 24px oklch(0 0 0 / 0.4))",
-                }}
-              />
+              <div className="relative z-10 w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto">
+                <motion.img
+                  src="/assets/generated/trishul-cyber-hero-transparent.dim_500x800.png"
+                  alt="CyberAstras — Trishul Astra with cyber effect"
+                  className="animate-float"
+                  style={{
+                    objectFit: "contain",
+                    width: "100%",
+                    height: "auto",
+                    display: "block",
+                    filter:
+                      "drop-shadow(0 0 40px oklch(0.83 0.15 192 / 0.35)) drop-shadow(0 0 80px oklch(0.76 0.10 75 / 0.15))",
+                  }}
+                />
+              </div>
             </motion.div>
           </div>
         </div>
@@ -517,7 +506,7 @@ export default function HomePage() {
               </div>
             </motion.div>
 
-            {/* Right: Founder photo — no overflow-hidden on parent to prevent clipping */}
+            {/* Right: Founder photo */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -526,7 +515,7 @@ export default function HomePage() {
               className="relative"
             >
               <div
-                className="rounded-xl"
+                className="rounded-xl overflow-hidden"
                 style={{
                   border: "1px solid oklch(0.25 0.035 210)",
                   boxShadow:
@@ -537,15 +526,10 @@ export default function HomePage() {
                 <img
                   src="/assets/uploads/image-1.png"
                   alt="Deepak Sharma — Founder & CyberSecurity Consultant at CyberAstras"
-                  style={{
-                    display: "block",
-                    width: "100%",
-                    height: "auto",
-                    borderRadius: "0.75rem 0.75rem 0 0",
-                  }}
+                  className="w-full object-contain block rounded-t-xl"
                 />
                 <div
-                  className="px-5 py-4 rounded-b-xl"
+                  className="px-5 py-4"
                   style={{
                     background: "oklch(0.10 0.015 200)",
                     borderTop: "1px solid oklch(0.25 0.035 210 / 0.5)",
@@ -604,7 +588,7 @@ export default function HomePage() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8 mb-10">
-            {latestPosts.map((post, i) => (
+            {staticBlogPosts.slice(0, 2).map((post, i) => (
               <motion.article
                 key={post.title}
                 initial={{ opacity: 0, y: 30 }}
@@ -672,15 +656,6 @@ export default function HomePage() {
                     >
                       {post.author}
                     </span>
-                    <button
-                      type="button"
-                      data-ocid="home.blog.read_more.button"
-                      onClick={() => setSelected(post)}
-                      className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest font-mono transition-all duration-200 hover:gap-2.5"
-                      style={{ color: "var(--cyber-cyan)" }}
-                    >
-                      Read More <ArrowRight size={12} />
-                    </button>
                   </div>
                 </div>
               </motion.article>
@@ -768,90 +743,6 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
-
-      {/* Full Article Dialog */}
-      <Dialog
-        open={!!selected}
-        onOpenChange={(open) => {
-          if (!open) setSelected(null);
-        }}
-      >
-        <DialogContent
-          className="z-[200] max-w-2xl max-h-[85vh] overflow-y-auto"
-          style={{
-            background: "oklch(0.12 0.018 205)",
-            border: "1px solid oklch(0.83 0.15 192 / 0.2)",
-            color: "var(--foreground)",
-          }}
-        >
-          {selected && (
-            <>
-              <DialogHeader>
-                <div className="flex items-center gap-3 mb-2">
-                  <span
-                    className="text-xs font-bold uppercase tracking-widest font-mono px-2 py-0.5 rounded"
-                    style={{
-                      color: "var(--cyber-cyan)",
-                      background: "oklch(0.83 0.15 192 / 0.1)",
-                      border: "1px solid oklch(0.83 0.15 192 / 0.2)",
-                    }}
-                  >
-                    {selected.category}
-                  </span>
-                  <span
-                    className="text-xs font-mono"
-                    style={{ color: "oklch(0.50 0.02 210)" }}
-                  >
-                    {selected.date}
-                  </span>
-                </div>
-                <DialogTitle
-                  className="font-display font-bold text-lg leading-snug text-foreground"
-                  style={{ textAlign: "left" }}
-                >
-                  {selected.title}
-                </DialogTitle>
-              </DialogHeader>
-
-              <div className="mt-4 space-y-4">
-                {selected.content.split("\n\n").map((para, idx) => (
-                  <p
-                    // biome-ignore lint/suspicious/noArrayIndexKey: paragraph order is stable
-                    key={idx}
-                    className="text-sm leading-relaxed"
-                    style={{ color: "oklch(0.68 0.02 210)" }}
-                  >
-                    {para.trim()}
-                  </p>
-                ))}
-              </div>
-
-              <div
-                className="mt-6 pt-4 flex items-center justify-between"
-                style={{ borderTop: "1px solid oklch(0.25 0.035 210 / 0.4)" }}
-              >
-                <span
-                  className="text-xs font-mono"
-                  style={{ color: "oklch(0.45 0.02 210)" }}
-                >
-                  {selected.author} &mdash; CyberAstras
-                </span>
-                <Button
-                  size="sm"
-                  onClick={() => setSelected(null)}
-                  className="font-display font-bold uppercase tracking-widest text-xs rounded-full px-5 h-8"
-                  style={{
-                    background: "oklch(0.83 0.15 192)",
-                    color: "oklch(0.10 0.015 200)",
-                  }}
-                >
-                  Close
-                </Button>
-              </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
     </>
   );
 }

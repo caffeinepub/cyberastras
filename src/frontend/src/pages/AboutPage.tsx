@@ -111,7 +111,7 @@ export default function AboutPage() {
               ))}
             </motion.div>
 
-            {/* Right: Founder photo — no overflow-hidden to prevent any clipping */}
+            {/* Right: Founder photo */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -126,20 +126,16 @@ export default function AboutPage() {
                   boxShadow:
                     "0 0 0 1px oklch(0.83 0.15 192 / 0.1), 0 20px 60px oklch(0 0 0 / 0.5)",
                   background: "oklch(0.10 0.015 200)",
+                  overflow: "hidden",
                 }}
               >
                 <img
                   src="/assets/uploads/image-1.png"
                   alt="Deepak Sharma — Founder & CyberSecurity Consultant at CyberAstras"
-                  style={{
-                    display: "block",
-                    width: "100%",
-                    height: "auto",
-                    borderRadius: "0.75rem 0.75rem 0 0",
-                  }}
+                  className="w-full object-contain block"
                 />
                 <div
-                  className="px-5 py-4 rounded-b-xl"
+                  className="px-5 py-4"
                   style={{
                     background: "oklch(0.10 0.015 200)",
                     borderTop: "1px solid oklch(0.25 0.035 210 / 0.5)",
