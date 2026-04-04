@@ -2,14 +2,11 @@ import { CircuitPattern, PageHero } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useSubmitInquiry } from "@/hooks/useQueries";
-import { encryptText } from "@/lib/crypto";
 import {
   ChevronRight,
   Linkedin,
   Mail,
   MessageSquare,
-  Shield,
   User,
   Zap,
 } from "lucide-react";
@@ -20,7 +17,7 @@ import { toast } from "sonner";
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const submitInquiry = useSubmitInquiry();
+  const [sent, setSent] = useState(false);
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -32,29 +29,20 @@ export default function ContactPage() {
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    const [encName, encEmail, encMsg] = await Promise.all([
-      encryptText(form.name),
-      encryptText(form.email),
-      encryptText(form.message),
-    ]);
-    submitInquiry.mutate(
-      { name: encName, email: encEmail, message: encMsg },
-      {
-        onSuccess: () => {
-          toast.success("Message sent successfully!", {
-            description: "We will respond within 24 hours.",
-          });
-          setForm({ name: "", email: "", message: "" });
-          setErrors({});
-        },
-        onError: () => {
-          toast.error("Something went wrong. Please try again.");
-        },
-      },
+    const subject = encodeURIComponent(`CyberAstras Inquiry from ${form.name}`);
+    const body = encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`,
     );
+    window.location.href = `mailto:info@cyberastras.com?subject=${subject}&body=${body}`;
+    setSent(true);
+    toast.success("Opening your email client...", {
+      description: "Your message is pre-filled and ready to send.",
+    });
+    setForm({ name: "", email: "", message: "" });
+    setErrors({});
   };
 
   return (
@@ -189,7 +177,7 @@ export default function ContactPage() {
                   border: "1px solid oklch(0.83 0.15 192 / 0.2)",
                 }}
               >
-                <Shield
+                <Mail
                   size={16}
                   className="flex-shrink-0 mt-0.5"
                   style={{ color: "var(--cyber-cyan)" }}
@@ -198,8 +186,9 @@ export default function ContactPage() {
                   className="text-xs leading-relaxed"
                   style={{ color: "oklch(0.60 0.02 210)" }}
                 >
-                  Your message is encrypted in your browser before being sent.
-                  Your data stays private.
+                  Clicking &lsquo;Send Message&rsquo; will open your email app
+                  with your message pre-filled. Just hit send and we will get
+                  back to you within 24 hours.
                 </p>
               </div>
             </motion.div>
@@ -222,12 +211,12 @@ export default function ContactPage() {
               >
                 <div className="mb-7">
                   <div className="flex items-center gap-2 mb-1">
-                    <Shield size={16} style={{ color: "var(--cyber-cyan)" }} />
+                    <Mail size={16} style={{ color: "var(--cyber-cyan)" }} />
                     <span
                       className="text-xs font-bold uppercase tracking-widest font-mono"
                       style={{ color: "var(--cyber-cyan)" }}
                     >
-                      Secure Message
+                      Direct Message
                     </span>
                   </div>
                   <h3 className="font-display text-xl font-black uppercase tracking-wide text-foreground">
@@ -360,31 +349,20 @@ export default function ContactPage() {
                   <Button
                     data-ocid="contact.submit_button"
                     type="submit"
-                    disabled={submitInquiry.isPending}
                     className="w-full font-display font-black uppercase tracking-widest text-sm rounded-lg h-12 transition-all duration-300"
                     style={{
-                      background: submitInquiry.isPending
-                        ? "oklch(0.83 0.15 192 / 0.5)"
-                        : "oklch(0.83 0.15 192)",
+                      background: "oklch(0.83 0.15 192)",
                       color: "oklch(0.10 0.015 200)",
-                      boxShadow: submitInquiry.isPending
-                        ? "none"
-                        : "0 0 24px oklch(0.83 0.15 192 / 0.4), 0 4px 16px oklch(0 0 0 / 0.3)",
+                      boxShadow:
+                        "0 0 24px oklch(0.83 0.15 192 / 0.4), 0 4px 16px oklch(0 0 0 / 0.3)",
                     }}
                   >
-                    {submitInquiry.isPending ? (
-                      <span className="flex items-center gap-2">
-                        <span className="w-4 h-4 rounded-full border-2 border-current border-t-transparent animate-spin" />
-                        Sending...
-                      </span>
-                    ) : (
-                      <span className="flex items-center gap-2">
-                        Send Message <ChevronRight size={16} />
-                      </span>
-                    )}
+                    <span className="flex items-center gap-2">
+                      Send Message <ChevronRight size={16} />
+                    </span>
                   </Button>
 
-                  {submitInquiry.isSuccess && (
+                  {sent && (
                     <motion.div
                       data-ocid="contact.success_state"
                       initial={{ opacity: 0, y: 8 }}
@@ -396,8 +374,8 @@ export default function ContactPage() {
                         color: "oklch(0.7 0.2 140)",
                       }}
                     >
-                      <Shield size={14} /> Message received. We will be in touch
-                      shortly.
+                      <Mail size={14} /> Your email app should have opened. Just
+                      hit send!
                     </motion.div>
                   )}
                 </form>
