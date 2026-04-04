@@ -84,31 +84,6 @@ const CircuitPattern = () => (
   </svg>
 );
 
-// --- Shield/Astra logo icon ---
-const AstraIcon = ({ size = 32 }: { size?: number }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 32 32"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    role="img"
-    aria-label="CyberAstras shield icon"
-  >
-    <path
-      d="M16 2L4 7v9c0 7 5.4 13.5 12 15.5C22.6 29.5 28 23 28 16V7L16 2z"
-      fill="oklch(0.83 0.15 192 / 0.15)"
-      stroke="oklch(0.83 0.15 192)"
-      strokeWidth="1.5"
-    />
-    <path
-      d="M16 8l-2 5H9l3.5 2.5L11 21l5-3.5L21 21l-1.5-5.5L23 13h-5z"
-      fill="oklch(0.76 0.10 75)"
-      opacity="0.9"
-    />
-  </svg>
-);
-
 // --- Service card ---
 const ServiceCard = ({
   icon: Icon,
@@ -1383,13 +1358,15 @@ export default function App() {
             {/* Brand */}
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <AstraIcon size={28} />
-                <span
-                  className="font-display font-bold uppercase tracking-widest text-glow-cyan"
-                  style={{ color: "var(--cyber-cyan)" }}
-                >
-                  CyberAstras
-                </span>
+                <img
+                  src="/assets/uploads/Untitled-3-1-1.png"
+                  alt="CyberAstras"
+                  style={{
+                    height: "48px",
+                    width: "auto",
+                    objectFit: "contain",
+                  }}
+                />
               </div>
               <p
                 className="text-sm leading-relaxed mb-5"
