@@ -167,7 +167,7 @@ export default function HomePage() {
               </motion.div>
             </div>
 
-            {/* Right: First uploaded image — fully visible, no crop */}
+            {/* Right: Trishul — fully visible, 600x550px, no crop */}
             <motion.div
               initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -178,21 +178,25 @@ export default function HomePage() {
                 className="absolute inset-0 rounded-full animate-pulse-glow pointer-events-none"
                 style={{
                   background:
-                    "radial-gradient(circle at 50% 50%, oklch(0.83 0.15 192 / 0.08) 0%, transparent 70%)",
+                    "radial-gradient(circle at 50% 50%, oklch(0.83 0.15 192 / 0.10) 0%, transparent 70%)",
                 }}
               />
-              <div className="relative z-10 w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto">
+              <div
+                className="relative z-10 mx-auto"
+                style={{ width: "min(600px, 100%)", height: "auto" }}
+              >
                 <motion.img
-                  src="/assets/uploads/image-1.png"
-                  alt="CyberAstras — Founder Deepak Sharma"
+                  src="/assets/generated/trishul-hero-full.dim_600x550.png"
+                  alt="CyberAstras Trishul — Cyber Weapon of Protection"
                   className="animate-float"
                   style={{
                     objectFit: "contain",
                     width: "100%",
                     height: "auto",
+                    maxHeight: "550px",
                     display: "block",
                     filter:
-                      "drop-shadow(0 0 40px oklch(0.83 0.15 192 / 0.35)) drop-shadow(0 0 80px oklch(0.76 0.10 75 / 0.15))",
+                      "drop-shadow(0 0 50px oklch(0.83 0.15 192 / 0.5)) drop-shadow(0 0 100px oklch(0.76 0.10 75 / 0.2))",
                   }}
                 />
               </div>
