@@ -167,7 +167,7 @@ export default function HomePage() {
               </motion.div>
             </div>
 
-            {/* Right: Trishul Illustration */}
+            {/* Right: First uploaded image — fully visible, no crop */}
             <motion.div
               initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -183,8 +183,8 @@ export default function HomePage() {
               />
               <div className="relative z-10 w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto">
                 <motion.img
-                  src="/assets/generated/trishul-cyber-hero-transparent.dim_500x800.png"
-                  alt="CyberAstras — Trishul Astra with cyber effect"
+                  src="/assets/uploads/image-1.png"
+                  alt="CyberAstras — Founder Deepak Sharma"
                   className="animate-float"
                   style={{
                     objectFit: "contain",

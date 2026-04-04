@@ -168,7 +168,7 @@ function Footer() {
           <div>
             <div className="flex items-center mb-4">
               <img
-                src="/assets/uploads/Untitled-3-1-1.png"
+                src="/assets/uploads/cyberastras-logo-new.png"
                 alt="CyberAstras"
                 className="h-10 w-auto"
               />
