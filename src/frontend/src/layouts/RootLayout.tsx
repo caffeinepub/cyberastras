@@ -1,4 +1,3 @@
-import { AstraIcon } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
@@ -167,14 +166,12 @@ function Footer() {
         <div className="grid md:grid-cols-3 gap-12 mb-12">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <AstraIcon size={28} />
-              <span
-                className="font-display font-bold uppercase tracking-widest"
-                style={{ color: "var(--cyber-cyan)" }}
-              >
-                CyberAstras
-              </span>
+            <div className="flex items-center mb-4">
+              <img
+                src="/assets/uploads/Untitled-3-1-1.png"
+                alt="CyberAstras"
+                className="h-10 w-auto"
+              />
             </div>
             <p
               className="text-sm leading-relaxed mb-5"

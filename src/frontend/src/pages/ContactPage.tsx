@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
+  CheckCircle,
   ChevronRight,
   Linkedin,
   Mail,
@@ -18,6 +19,7 @@ export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -29,20 +31,41 @@ export default function ContactPage() {
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    const subject = encodeURIComponent(`CyberAstras Inquiry from ${form.name}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`,
-    );
-    window.location.href = `mailto:info@cyberastras.com?subject=${subject}&body=${body}`;
-    setSent(true);
-    toast.success("Opening your email client...", {
-      description: "Your message is pre-filled and ready to send.",
-    });
-    setForm({ name: "", email: "", message: "" });
-    setErrors({});
+    setLoading(true);
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "2eaec419-db4e-408f-bc19-3dbcdd0238bc",
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          subject: `CyberAstras Inquiry from ${form.name}`,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSent(true);
+        setForm({ name: "", email: "", message: "" });
+        setErrors({});
+        toast.success("Message sent!", {
+          description: "We will get back to you within 24 hours.",
+        });
+      } else {
+        toast.error(data.message || "Failed to send. Please try again.");
+      }
+    } catch {
+      toast.error("Connection error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -186,9 +209,9 @@ export default function ContactPage() {
                   className="text-xs leading-relaxed"
                   style={{ color: "oklch(0.60 0.02 210)" }}
                 >
-                  Clicking &lsquo;Send Message&rsquo; will open your email app
-                  with your message pre-filled. Just hit send and we will get
-                  back to you within 24 hours.
+                  Fill in the form and click &lsquo;Send Message&rsquo; — your
+                  message will be delivered directly to our inbox. No email app
+                  needed.
                 </p>
               </div>
             </motion.div>
@@ -209,176 +232,205 @@ export default function ContactPage() {
                     "0 0 40px oklch(0.83 0.15 192 / 0.05), 0 20px 60px oklch(0 0 0 / 0.4)",
                 }}
               >
-                <div className="mb-7">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Mail size={16} style={{ color: "var(--cyber-cyan)" }} />
-                    <span
-                      className="text-xs font-bold uppercase tracking-widest font-mono"
-                      style={{ color: "var(--cyber-cyan)" }}
-                    >
-                      Direct Message
-                    </span>
-                  </div>
-                  <h3 className="font-display text-xl font-black uppercase tracking-wide text-foreground">
-                    Send Us a Message
-                  </h3>
-                </div>
-
-                <form
-                  onSubmit={handleSubmit}
-                  noValidate
-                  data-ocid="contact.panel"
-                >
-                  {/* Name */}
-                  <div className="mb-5">
-                    <label
-                      htmlFor="name"
-                      className="block text-xs font-bold uppercase tracking-widest mb-2 font-mono"
-                      style={{ color: "oklch(0.65 0.02 210)" }}
-                    >
-                      <User size={10} className="inline mr-1" />
-                      Full Name
-                    </label>
-                    <Input
-                      id="name"
-                      data-ocid="contact.input"
-                      type="text"
-                      placeholder="Enter your full name"
-                      value={form.name}
-                      onChange={(e) =>
-                        setForm((p) => ({ ...p, name: e.target.value }))
-                      }
-                      className="font-body bg-transparent rounded-lg h-11"
-                      style={{
-                        background: "oklch(0.10 0.015 200)",
-                        border: errors.name
-                          ? "1px solid oklch(0.577 0.245 27.325)"
-                          : "1px solid oklch(0.25 0.035 210)",
-                        color: "oklch(0.96 0.005 210)",
-                      }}
-                    />
-                    {errors.name && (
-                      <p
-                        data-ocid="contact.error_state"
-                        className="text-xs mt-1.5"
-                        style={{ color: "oklch(0.7 0.2 27)" }}
-                      >
-                        {errors.name}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Email */}
-                  <div className="mb-5">
-                    <label
-                      htmlFor="email"
-                      className="block text-xs font-bold uppercase tracking-widest mb-2 font-mono"
-                      style={{ color: "oklch(0.65 0.02 210)" }}
-                    >
-                      <Mail size={10} className="inline mr-1" />
-                      Email Address
-                    </label>
-                    <Input
-                      id="email"
-                      data-ocid="contact.input"
-                      type="email"
-                      placeholder="your@email.com"
-                      value={form.email}
-                      onChange={(e) =>
-                        setForm((p) => ({ ...p, email: e.target.value }))
-                      }
-                      className="font-body bg-transparent rounded-lg h-11"
-                      style={{
-                        background: "oklch(0.10 0.015 200)",
-                        border: errors.email
-                          ? "1px solid oklch(0.577 0.245 27.325)"
-                          : "1px solid oklch(0.25 0.035 210)",
-                        color: "oklch(0.96 0.005 210)",
-                      }}
-                    />
-                    {errors.email && (
-                      <p
-                        data-ocid="contact.error_state"
-                        className="text-xs mt-1.5"
-                        style={{ color: "oklch(0.7 0.2 27)" }}
-                      >
-                        {errors.email}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Message */}
-                  <div className="mb-7">
-                    <label
-                      htmlFor="message"
-                      className="block text-xs font-bold uppercase tracking-widest mb-2 font-mono"
-                      style={{ color: "oklch(0.65 0.02 210)" }}
-                    >
-                      <MessageSquare size={10} className="inline mr-1" />
-                      Message
-                    </label>
-                    <Textarea
-                      id="message"
-                      data-ocid="contact.textarea"
-                      placeholder="Describe your security requirements or questions..."
-                      rows={5}
-                      value={form.message}
-                      onChange={(e) =>
-                        setForm((p) => ({ ...p, message: e.target.value }))
-                      }
-                      className="font-body bg-transparent rounded-lg resize-none"
-                      style={{
-                        background: "oklch(0.10 0.015 200)",
-                        border: errors.message
-                          ? "1px solid oklch(0.577 0.245 27.325)"
-                          : "1px solid oklch(0.25 0.035 210)",
-                        color: "oklch(0.96 0.005 210)",
-                      }}
-                    />
-                    {errors.message && (
-                      <p
-                        data-ocid="contact.error_state"
-                        className="text-xs mt-1.5"
-                        style={{ color: "oklch(0.7 0.2 27)" }}
-                      >
-                        {errors.message}
-                      </p>
-                    )}
-                  </div>
-
-                  <Button
-                    data-ocid="contact.submit_button"
-                    type="submit"
-                    className="w-full font-display font-black uppercase tracking-widest text-sm rounded-lg h-12 transition-all duration-300"
-                    style={{
-                      background: "oklch(0.83 0.15 192)",
-                      color: "oklch(0.10 0.015 200)",
-                      boxShadow:
-                        "0 0 24px oklch(0.83 0.15 192 / 0.4), 0 4px 16px oklch(0 0 0 / 0.3)",
-                    }}
+                {sent ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="flex flex-col items-center justify-center py-12 text-center gap-4"
                   >
-                    <span className="flex items-center gap-2">
-                      Send Message <ChevronRight size={16} />
-                    </span>
-                  </Button>
-
-                  {sent && (
-                    <motion.div
-                      data-ocid="contact.success_state"
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mt-4 flex items-center gap-2 text-sm p-3 rounded-lg"
+                    <CheckCircle
+                      size={48}
+                      style={{ color: "oklch(0.7 0.2 140)" }}
+                    />
+                    <h3
+                      className="font-display text-xl font-black uppercase tracking-wide"
+                      style={{ color: "oklch(0.7 0.2 140)" }}
+                    >
+                      Message Sent!
+                    </h3>
+                    <p
+                      className="text-sm"
+                      style={{ color: "oklch(0.65 0.02 210)" }}
+                    >
+                      Thank you for reaching out. We will get back to you within
+                      24 hours.
+                    </p>
+                    <Button
+                      variant="outline"
+                      className="mt-2"
+                      onClick={() => setSent(false)}
                       style={{
-                        background: "oklch(0.7 0.2 140 / 0.1)",
-                        border: "1px solid oklch(0.7 0.2 140 / 0.3)",
-                        color: "oklch(0.7 0.2 140)",
+                        borderColor: "oklch(0.25 0.035 210)",
+                        color: "oklch(0.65 0.02 210)",
                       }}
                     >
-                      <Mail size={14} /> Your email app should have opened. Just
-                      hit send!
-                    </motion.div>
-                  )}
-                </form>
+                      Send Another Message
+                    </Button>
+                  </motion.div>
+                ) : (
+                  <>
+                    <div className="mb-7">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Mail
+                          size={16}
+                          style={{ color: "var(--cyber-cyan)" }}
+                        />
+                        <span
+                          className="text-xs font-bold uppercase tracking-widest font-mono"
+                          style={{ color: "var(--cyber-cyan)" }}
+                        >
+                          Direct Message
+                        </span>
+                      </div>
+                      <h3 className="font-display text-xl font-black uppercase tracking-wide text-foreground">
+                        Send Us a Message
+                      </h3>
+                    </div>
+
+                    <form
+                      onSubmit={handleSubmit}
+                      noValidate
+                      data-ocid="contact.panel"
+                    >
+                      {/* Name */}
+                      <div className="mb-5">
+                        <label
+                          htmlFor="name"
+                          className="block text-xs font-bold uppercase tracking-widest mb-2 font-mono"
+                          style={{ color: "oklch(0.65 0.02 210)" }}
+                        >
+                          <User size={10} className="inline mr-1" />
+                          Full Name
+                        </label>
+                        <Input
+                          id="name"
+                          data-ocid="contact.input"
+                          type="text"
+                          placeholder="Enter your full name"
+                          value={form.name}
+                          onChange={(e) =>
+                            setForm((p) => ({ ...p, name: e.target.value }))
+                          }
+                          className="font-body bg-transparent rounded-lg h-11"
+                          style={{
+                            background: "oklch(0.10 0.015 200)",
+                            border: errors.name
+                              ? "1px solid oklch(0.577 0.245 27.325)"
+                              : "1px solid oklch(0.25 0.035 210)",
+                            color: "oklch(0.96 0.005 210)",
+                          }}
+                        />
+                        {errors.name && (
+                          <p
+                            data-ocid="contact.error_state"
+                            className="text-xs mt-1.5"
+                            style={{ color: "oklch(0.7 0.2 27)" }}
+                          >
+                            {errors.name}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Email */}
+                      <div className="mb-5">
+                        <label
+                          htmlFor="email"
+                          className="block text-xs font-bold uppercase tracking-widest mb-2 font-mono"
+                          style={{ color: "oklch(0.65 0.02 210)" }}
+                        >
+                          <Mail size={10} className="inline mr-1" />
+                          Email Address
+                        </label>
+                        <Input
+                          id="email"
+                          data-ocid="contact.input"
+                          type="email"
+                          placeholder="your@email.com"
+                          value={form.email}
+                          onChange={(e) =>
+                            setForm((p) => ({ ...p, email: e.target.value }))
+                          }
+                          className="font-body bg-transparent rounded-lg h-11"
+                          style={{
+                            background: "oklch(0.10 0.015 200)",
+                            border: errors.email
+                              ? "1px solid oklch(0.577 0.245 27.325)"
+                              : "1px solid oklch(0.25 0.035 210)",
+                            color: "oklch(0.96 0.005 210)",
+                          }}
+                        />
+                        {errors.email && (
+                          <p
+                            data-ocid="contact.error_state"
+                            className="text-xs mt-1.5"
+                            style={{ color: "oklch(0.7 0.2 27)" }}
+                          >
+                            {errors.email}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Message */}
+                      <div className="mb-7">
+                        <label
+                          htmlFor="message"
+                          className="block text-xs font-bold uppercase tracking-widest mb-2 font-mono"
+                          style={{ color: "oklch(0.65 0.02 210)" }}
+                        >
+                          <MessageSquare size={10} className="inline mr-1" />
+                          Message
+                        </label>
+                        <Textarea
+                          id="message"
+                          data-ocid="contact.textarea"
+                          placeholder="Describe your security requirements or questions..."
+                          rows={5}
+                          value={form.message}
+                          onChange={(e) =>
+                            setForm((p) => ({ ...p, message: e.target.value }))
+                          }
+                          className="font-body bg-transparent rounded-lg resize-none"
+                          style={{
+                            background: "oklch(0.10 0.015 200)",
+                            border: errors.message
+                              ? "1px solid oklch(0.577 0.245 27.325)"
+                              : "1px solid oklch(0.25 0.035 210)",
+                            color: "oklch(0.96 0.005 210)",
+                          }}
+                        />
+                        {errors.message && (
+                          <p
+                            data-ocid="contact.error_state"
+                            className="text-xs mt-1.5"
+                            style={{ color: "oklch(0.7 0.2 27)" }}
+                          >
+                            {errors.message}
+                          </p>
+                        )}
+                      </div>
+
+                      <Button
+                        data-ocid="contact.submit_button"
+                        type="submit"
+                        disabled={loading}
+                        className="w-full font-display font-black uppercase tracking-widest text-sm rounded-lg h-12 transition-all duration-300"
+                        style={{
+                          background: loading
+                            ? "oklch(0.83 0.15 192 / 0.5)"
+                            : "oklch(0.83 0.15 192)",
+                          color: "oklch(0.10 0.015 200)",
+                          boxShadow:
+                            "0 0 24px oklch(0.83 0.15 192 / 0.4), 0 4px 16px oklch(0 0 0 / 0.3)",
+                        }}
+                      >
+                        <span className="flex items-center gap-2">
+                          {loading ? "Sending..." : "Send Message"}
+                          {!loading && <ChevronRight size={16} />}
+                        </span>
+                      </Button>
+                    </form>
+                  </>
+                )}
               </div>
             </motion.div>
           </div>
